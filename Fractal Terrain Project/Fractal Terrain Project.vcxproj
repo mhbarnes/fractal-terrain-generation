@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Ibrahim\Documents\Fractal Terrain Project\Fractal Terrain Project\OpenGL Stuff\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Ibrahim\Documents\Fractal Terrain Project\Fractal Terrain Project\OpenGL Stuff\libraries;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Ibrahim\Downloads\fractal-terrain-generation\Fractal Terrain Project\OpenGL Stuff\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Ibrahim\Downloads\fractal-terrain-generation\Fractal Terrain Project\OpenGL Stuff\libraries;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
