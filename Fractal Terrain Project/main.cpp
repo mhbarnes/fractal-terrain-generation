@@ -42,6 +42,7 @@ int main()
 
 	// Make context of window the main context (what does context mean?)
 	glfwMakeContextCurrent(window);
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	// Initialize GLAD
 	if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
@@ -185,9 +186,12 @@ int main()
 		glfwPollEvents();
 	}
 
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
 
 	// End use of GLFW
 	glfwTerminate();
 
 	return 0;
 }
+
