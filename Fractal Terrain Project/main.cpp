@@ -22,9 +22,9 @@ int main()
 	// Initialize GLFW
 	glfwInit();
 
-	// Which version of OpenGL to use: this is configured to 3.2
+	// Which version of OpenGL to use: this is configured to 3.3
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	// Have GLFW explicitly use the core profile (what does that mean?)
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
@@ -44,7 +44,7 @@ int main()
 	glfwMakeContextCurrent(window);
 
 	// Initialize GLAD
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress))
 	{
 		std::cout << "Failed to initialize GLAD.\n";
 
@@ -111,11 +111,24 @@ int main()
 	// ------------------------------------------------------------------
 	float vertices[] =
 	{
-		-0.5f, -0.5f, 0.0f, // left  
-		 0.5f, -0.5f, 0.0f, // right 
-		 0.0f,  0.5f, 0.0f  // top   
-	};
+		 0.0f,  0.0f, 0.0f,
+		 0.5f,  0.0f, 0.0f,
+		 0.0f,  0.5f, 0.0f,
 
+		-0.5f,  0.0f, 0.0f,
+		-0.2f,  0.0f, 0.0f,
+		 0.0f, -0.3f, 0.0f,
+	};/*
+	int vertices[] =
+	{
+		 100, 200, 000,
+		 100, 200, 000,
+		 100, 500, 000,
+
+		 50, 90, 300,
+		 100, 200, 500,
+		 100, 500, 300,
+	};*/
 	unsigned int VBO, VAO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -123,9 +136,16 @@ int main()
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	// 1. aPos in vertex shader (location = 0)
+	// 2. vec3
+	// 3. float
+	// 4. data will not be normalized (already normalized)
+	// 5. space between consecutive vertex attributes (space between each 3D vertex)
+	// 6. 
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_TRUE, 3 * sizeof(float), (void*)0);
+	// 1. aPos in vertex shader (location = 0)
 	glEnableVertexAttribArray(0);
 
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
@@ -146,13 +166,18 @@ int main()
 		processInput(window);
 		
 		
+		vertices[0] = r;
+		//std::cout << vertices[0] << std::endl;
 
 		glClearColor(.5*(1+sin(r += .0001)), .5*(1 + sin(g += .0006)), .5*(1 + sin(b += .0002)), 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		// 1. Type of output
+		// 2. Starting index
+		// 3. Number of verticies to draw
+		glDrawArrays(GL_TRIANGLES, 0, 3 * 2);
 
 		// Swap the color buffer that has been used to draw in during this iteration and show it as output to the screen
 		glfwSwapBuffers(window);

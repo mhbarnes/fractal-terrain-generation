@@ -1,3 +1,2 @@
-﻿  main.cpp
-c:\users\ibrahim\documents\fractal-terrain-generation\fractal terrain project\main.cpp(150): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+﻿  terrainmap.cpp
   Fractal Terrain Project.vcxproj -> C:\Users\Ibrahim\Documents\fractal-terrain-generation\Debug\Fractal Terrain Project.exe
