@@ -13,13 +13,14 @@ struct point {
 };
 
 struct triangle {
-	point1 point1;
-	point2 point2;
-	point3 point3;
+	point* point1;
+	point* point2;
+	point* point3;
 };
 
 //Functions
 point* create_point(int, int, int);
-triangle* create_triangle(point*, point*, point*)
+triangle* create_triangle(point*, point*, point*);
+void add_to_vector(vector<triangle>, triangle*);
 
 #endif

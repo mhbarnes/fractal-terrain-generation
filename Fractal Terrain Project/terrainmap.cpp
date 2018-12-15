@@ -32,4 +32,8 @@ triangle* create_triangle(point* pt1, point* pt2, point* pt3) {
 	return temp;
 }
 
+void add_to_vector(vector<triangle> v, triangle* tri) {
+	v.push_back(tri);
+}
+
 
