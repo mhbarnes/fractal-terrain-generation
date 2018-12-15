@@ -4,21 +4,14 @@
 #include <cmath>
 #include "window.h"
 
-const char *vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
-const char *fragmentShaderSource = "#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-"}\n\0";
-
 int main()
 {
+	// Shaders input
+	std::string temp1 = getFileText("shaders/shader.vert");
+	const char* vertexShaderSource = temp1.c_str();
+	std::string temp2 = getFileText("shaders/shader.frag");
+	const char* fragmentShaderSource = temp2.c_str();
+
 	// Variable declarations
 	const char* windowTitle = "Fractal Terrain Project";
 	int xResolution = 800;
@@ -60,42 +53,52 @@ int main()
 	}
 
 	// build and compile our shader program
-// ------------------------------------
-// vertex shader
+	// ------------------------------------
+	// vertex shader
 	int vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
+
 	// check for shader compile errors
 	int success;
 	char infoLog[512];
 	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+
 	if (!success)
 	{
 		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
+
 	// fragment shader
 	int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
 	glCompileShader(fragmentShader);
+
 	// check for shader compile errors
 	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+
 	if (!success)
 	{
 		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
 	}
+
 	// link shaders
 	int shaderProgram = glCreateProgram();
 	glAttachShader(shaderProgram, vertexShader);
 	glAttachShader(shaderProgram, fragmentShader);
 	glLinkProgram(shaderProgram);
+
 	// check for linking errors
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
+
+	if (!success)
+	{
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
+
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
@@ -104,13 +107,10 @@ int main()
 	// Resize callback
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
-	float r = 0;
-	float g = 0;
-	float b = 0;
-	
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
-	float vertices[] = {
+	float vertices[] =
+	{
 		-0.5f, -0.5f, 0.0f, // left  
 		 0.5f, -0.5f, 0.0f, // right 
 		 0.0f,  0.5f, 0.0f  // top   
@@ -135,6 +135,10 @@ int main()
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
 	glBindVertexArray(0);
 
+	double r = 0;
+	double g = 0;
+	double b = 0;
+	
 	// Render Loop (repeat until window closes)
 	while (!glfwWindowShouldClose(window))
 	{
