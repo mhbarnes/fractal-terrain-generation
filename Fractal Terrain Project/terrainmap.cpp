@@ -1,7 +1,6 @@
-#include "terrain-map.h"
+#include "terrainmap.h"
 
 using namespace std;
-
 
 point* create_point(int x, int y, int z) {
 	point* temp = new point;
