@@ -55,14 +55,25 @@ int main()
 	float g = 0;
 	float b = 0;
 
+	float vertices[] =
+	{
+		-0.5f, -0.5f, 0.0f,
+		 0.5f, -0.5f, 0.0f,
+		 0.0f,  0.5f, 0.0f
+	};
+
+	unsigned int VBO;
+	glGenBuffers(1, &VBO);
+
 	// Render Loop (repeat until window closes)
 	while (!glfwWindowShouldClose(window))
 	{
 		// Handle user input
 		processInput(window);
+		
+		
 
-
-		glClearColor(sin(r += .0001), fmod(g += .00015, 1), fmod(b += .0002, 1), 1.0f);
+		glClearColor(.5*(1+sin(r += .0001)), .5*(1 + sin(g += .0006)), .5*(1 + sin(b += .0002)), 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 
