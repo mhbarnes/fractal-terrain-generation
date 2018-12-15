@@ -1,6 +1,10 @@
 #ifndef TERRAINMAP_H
 #define TERRAINMAP_H
 
+#include <iostream>
+#include <cmath>
+#include <vector>
+
 //Structs
 struct point {
 	int x;
@@ -9,14 +13,13 @@ struct point {
 };
 
 struct triangle {
-	int point1;
-	int point2;
-	int point3;
+	point1 point1;
+	point2 point2;
+	point3 point3;
 };
 
 //Functions
-int map_to_height(int*);
-point* map_to_point(int, int, int)
-
+point* create_point(int, int, int);
+triangle* create_triangle(point*, point*, point*)
 
 #endif
