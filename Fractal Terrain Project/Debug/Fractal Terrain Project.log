@@ -1,4 +1,4 @@
 ﻿  main.cpp
-c:\users\ibrahim\documents\fractal-terrain-generation\fractal terrain project\main.cpp(67): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\ibrahim\documents\fractal-terrain-generation\fractal terrain project\main.cpp(67): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
+c:\users\ibrahim\documents\fractal-terrain-generation\fractal terrain project\main.cpp(146): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\ibrahim\documents\fractal-terrain-generation\fractal terrain project\main.cpp(146): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
   Fractal Terrain Project.vcxproj -> C:\Users\Ibrahim\Documents\fractal-terrain-generation\Debug\Fractal Terrain Project.exe
