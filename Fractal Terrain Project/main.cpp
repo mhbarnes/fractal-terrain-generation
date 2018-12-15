@@ -4,6 +4,10 @@
 #include <cmath>
 #include "window.h"
 
+void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+void processInput(GLFWwindow *window);
+
+
 const char *vertexShaderSource = "#version 330 core\n"
 "layout (location = 0) in vec3 aPos;\n"
 "void main()\n"
@@ -49,6 +53,7 @@ int main()
 
 	// Make context of window the main context (what does context mean?)
 	glfwMakeContextCurrent(window);
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	// Initialize GLAD
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -135,6 +140,7 @@ int main()
 	// VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
 	glBindVertexArray(0);
 
+
 	// Render Loop (repeat until window closes)
 	while (!glfwWindowShouldClose(window))
 	{
@@ -156,9 +162,12 @@ int main()
 		glfwPollEvents();
 	}
 
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
 
 	// End use of GLFW
 	glfwTerminate();
 
 	return 0;
 }
+
