@@ -11,9 +11,9 @@ using namespace std;
 
 // RGB struct
 struct RGB {
-	int red;
-	int green;
-	int blue;
+	float red;
+	float green;
+	float blue;
 };
 
 // HSV struct
