@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include "color.h"
 
 using namespace std;
 
@@ -23,8 +24,9 @@ struct triangle
 };
 
 //Functions
-point* create_point(int, int, int);
-triangle* create_triangle(point, point, point);
+point create_point(int, int, int);
+triangle create_triangle(point, point, point);
 void add_to_vector(vector<triangle>&, triangle);
+void hsv_to_triangle(HSV**, vector<triangle>&, int, int);
 
 #endif

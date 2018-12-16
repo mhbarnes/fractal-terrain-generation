@@ -5,22 +5,6 @@
 
 using namespace std;
 
-/******************************************************************************/
-
-// RGB struct
-struct RGB {
-    int red;
-    int green;
-    int blue;
-};
-
-// HSV struct
-struct HSV {
-    double hue;
-    double saturation;
-    double value;
-};
-
 /******************************************************************************
 
 int main(){
@@ -140,51 +124,64 @@ void delete_HSV(struct HSV ** hsv_arr, int rows, int cols){
 
 /******************************************************************************/
 
-static int Min(int a, int b) {
+static double Min(double a, double b) {
 	return a <= b ? a : b;
 }
 
-static int Max(int a, int b) {
+static double Max(double a, double b) {
 	return a >= b ? a : b;
 }
 
-void RGB2HSV(struct RGB ** rgb_arr, struct HSV ** hsv_arr, int rows, int cols){
-    double delta, min;
+double GetHue(RGB rgb)
+{
+	double min = Min(Min(rgb.red, rgb.green), rgb.blue);
+	double max = Max(Max(rgb.red, rgb.green), rgb.blue);
 
-    for(int i = 0; i < rows; i++){
-        for(int j = 0; j < cols; j++){
-            min = Min(Min(rgb_arr[i][j].red, rgb_arr[i][j].green), rgb_arr[i][j].blue);
-            hsv_arr[i][j].value = Max(Max(rgb_arr[i][j].red, rgb_arr[i][j].green), rgb_arr[i][j].blue);
-            delta = hsv_arr[i][j].value - min;
-            
-            if(hsv_arr[i][j].value == 0.0){
-               hsv_arr[i][j].saturation = 0;
-            }
-            else{
-               hsv_arr[i][j].saturation = delta / hsv_arr[i][j].value;
-            }
-            
-            if(hsv_arr[i][j].saturation == 0){
-                hsv_arr[i][j].hue = 0.0;
-            }
-            else{
-                if(rgb_arr[i][j].red == hsv_arr[i][j].value){
-                    hsv_arr[i][j].hue = (rgb_arr[i][j].green - rgb_arr[i][j].blue) / delta;
-                }
-                else if(rgb_arr[i][j].green == hsv_arr[i][j].value){
-                    hsv_arr[i][j].hue = 2 + (rgb_arr[i][j].blue - rgb_arr[i][j].red) / delta;
-                }
-                else if(rgb_arr[i][j].blue == hsv_arr[i][j].value){
-                    hsv_arr[i][j].hue = 4 + (rgb_arr[i][j].red - rgb_arr[i][j].green) / delta;
-                }
-                hsv_arr[i][j].hue *= 60;
-                
-                if(hsv_arr[i][j].hue < 0.0){
-                    hsv_arr[i][j].hue = hsv_arr[i][j].hue + 360;
-                }
-            }
-            
-           hsv_arr[i][j].value = hsv_arr[i][j].value/ 255;
-        }
-    }
+	double rNorm = (double) rgb.red / 255;
+	double gNorm = (double) rgb.green / 255;
+	double bNorm = (double) rgb.blue / 255;
+
+	double hue = 0;
+
+	if (rgb.red >= rgb.green && rgb.red >= rgb.blue)
+		hue = (double) (rgb.green - rgb.blue) / (max - min);
+	else if (rgb.green >= rgb.red && rgb.green >= rgb.blue)
+		hue = 2.0 + (rgb.blue - rgb.red) / (max - min);
+	else if (rgb.blue >= rgb.red && rgb.blue >= rgb.green)
+		hue = 4 + (rNorm - rgb.green) / (max - min);
+
+	if (hue < 0)
+		hue += 360;
+
+	return hue * 60;
+}
+
+double GetSaturation(RGB rgb)
+{
+	double max = Max(Max(rgb.red, rgb.green), rgb.blue);
+
+	return (max == 0) ? 0 : 1 - (1 * Min(Min(rgb.red, rgb.green), rgb.blue) / max);
+}
+
+double GetValue(RGB rgb)
+{
+	return (double) Max(Max(rgb.red, rgb.green), rgb.blue) / 255;
+}
+
+HSV RGB2HSV(RGB rgb)
+{
+	HSV hsv;
+
+	hsv.hue = GetHue(rgb);
+	hsv.saturation = GetSaturation(rgb);
+	hsv.value = GetValue(rgb);
+
+	return hsv;
+}
+
+void RGB2HSV(struct RGB ** rgb_arr, struct HSV ** hsv_arr, int rows, int cols)
+{
+    for(int i = 0; i < rows; i++)
+        for(int j = 0; j < cols; j++)
+			hsv_arr[i][j] = RGB2HSV(rgb_arr[i][j]);
 }

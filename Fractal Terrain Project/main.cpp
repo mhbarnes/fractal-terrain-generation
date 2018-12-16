@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cmath>
 #include "window.h"
+#include "fractal.h"
+#include "bitmap_image.hpp"
 
 int main()
 {
@@ -110,6 +112,35 @@ int main()
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
+
+	int numTriangles = 2 * xResolution * yResolution;
+	/*float* vertices = new float[3 * 3 * numTriangles];
+	int counter = 0;
+
+	for (int x = 0; x < xResolution; x+=100)
+		for (int y = 0; y < yResolution; y+=100)
+		{
+			vertices[counter++] = 2 * ((float)x / xResolution) - 1;
+			vertices[counter++] = 2 * ((float)y / yResolution) - 1;
+			vertices[counter++] = 0;
+			vertices[counter++] = 2 * ((float)(x + 100) / xResolution) - 1;
+			vertices[counter++] = 2 * ((float)y / yResolution) - 1;
+			vertices[counter++] = 0;
+			vertices[counter++] = 2 * ((float)x / xResolution) - 1;
+			vertices[counter++] = 2 * ((float)(y + 100) / yResolution) - 1;
+			vertices[counter++] = 0;
+			std::cout << 2 * ((float)x / xResolution) - 1 << ", " <<((float)y / yResolution) - 1<< ", "<<0<<std::endl;
+			vertices[counter++] = 2 * ((float)((x + 100) / xResolution)) - 1;
+			vertices[counter++] = 2 * ((float)(y / yResolution)) - 1;
+			vertices[counter++] = 0;
+			vertices[counter++] = 2 * ((float)((x + 100) / xResolution)) - 1;
+			vertices[counter++] = 2 * ((float)((y + 100) / yResolution)) - 1;
+			vertices[counter++] = 0;
+			vertices[counter++] = 2 * ((float)(x / xResolution)) - 1;
+			vertices[counter++] = 2 * ((float)((y + 100) / yResolution)) - 1;
+			vertices[counter++] = 0;
+		}
+		*/
 	float vertices[] =
 	{
 		 0.0f,  0.0f, 0.0f,
@@ -119,8 +150,8 @@ int main()
 		-0.5f,  0.0f, 0.0f,
 		-0.2f,  0.0f, 0.0f,
 		 0.0f, -0.3f, 0.0f,
-	};/*
-	int vertices[] =
+	};
+	/*int vertices[] =
 	{
 		 100, 200, 000,
 		 100, 200, 000,
@@ -178,7 +209,7 @@ int main()
 		// 1. Type of output
 		// 2. Starting index
 		// 3. Number of verticies to draw
-		glDrawArrays(GL_TRIANGLES, 0, 3 * 2);
+		glDrawArrays(GL_TRIANGLES, 0, 3 * numTriangles);
 
 		// Swap the color buffer that has been used to draw in during this iteration and show it as output to the screen
 		glfwSwapBuffers(window);

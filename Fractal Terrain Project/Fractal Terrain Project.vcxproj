@@ -122,6 +122,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="color.cpp" />
+    <ClCompile Include="fractal.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="terrainmap.cpp" />
@@ -132,7 +133,9 @@
     <None Include="shaders\shader.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bitmap_image.hpp" />
     <ClInclude Include="color.h" />
+    <ClInclude Include="fractal.h" />
     <ClInclude Include="terrainmap.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
