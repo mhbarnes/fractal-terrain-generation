@@ -137,18 +137,14 @@ double GetHue(RGB rgb)
 	double min = Min(Min(rgb.red, rgb.green), rgb.blue);
 	double max = Max(Max(rgb.red, rgb.green), rgb.blue);
 
-	double rNorm = (double) rgb.red / 255;
-	double gNorm = (double) rgb.green / 255;
-	double bNorm = (double) rgb.blue / 255;
-
 	double hue = 0;
 
 	if (rgb.red >= rgb.green && rgb.red >= rgb.blue)
-		hue = (double) (rgb.green - rgb.blue) / (max - min);
+		hue = (rgb.green - rgb.blue) / (max - min);
 	else if (rgb.green >= rgb.red && rgb.green >= rgb.blue)
-		hue = 2.0 + (rgb.blue - rgb.red) / (max - min);
+		hue = 2 + (rgb.blue - rgb.red) / (max - min);
 	else if (rgb.blue >= rgb.red && rgb.blue >= rgb.green)
-		hue = 4 + (rNorm - rgb.green) / (max - min);
+		hue = 4 + (rgb.red - rgb.green) / (max - min);
 
 	if (hue < 0)
 		hue += 360;
