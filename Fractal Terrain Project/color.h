@@ -66,4 +66,8 @@ void RGB2HSV(struct RGB ** rgb_arr, struct HSV ** hsv_arr, int rows, int cols);
 
 RGB HSV2RGB(HSV hsv);
 
+RGB MergeRGB(RGB a, RGB b);
+
+HSV MergeHSV(HSV a, HSV b);
+
 #endif

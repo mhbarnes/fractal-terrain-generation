@@ -191,7 +191,25 @@ int main()
 	double r = 0;
 	double g = 0;
 	double b = 0;
-	
+
+	std::string mainPath = "main.bmp";
+	std::string tempPath = "temp.bmp";
+
+	bitmap_image main = StaticNoise(500, 500);
+	bitmap_image temp = StaticNoise(500, 500);
+
+	main.save_image("main_start.bmp");
+	temp.save_image("temp_start.bmp");
+
+	for (int i = 0; i < 10; i++)
+	{
+		main = FeedbackFractal(main, temp, 10, 10, 1, .9);
+		std::cout << i << std::endl;
+	}
+
+	main.save_image(mainPath);
+	temp.save_image(tempPath);
+
 	// Render Loop (repeat until window closes)
 	while (!glfwWindowShouldClose(window))
 	{

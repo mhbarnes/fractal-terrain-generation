@@ -1,2 +1,8 @@
 ﻿  fractal.cpp
+c:\users\ibrahim\documents\fractal-terrain-generation\fractal terrain project\fractal.cpp(31): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\ibrahim\documents\fractal-terrain-generation\fractal terrain project\fractal.cpp(32): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\ibrahim\documents\fractal-terrain-generation\fractal terrain project\fractal.cpp(94): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\ibrahim\documents\fractal-terrain-generation\fractal terrain project\fractal.cpp(95): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\ibrahim\documents\fractal-terrain-generation\fractal terrain project\fractal.cpp(96): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\ibrahim\documents\fractal-terrain-generation\fractal terrain project\fractal.cpp(98): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   Fractal Terrain Project.vcxproj -> C:\Users\Ibrahim\Documents\fractal-terrain-generation\Debug\Fractal Terrain Project.exe

@@ -7,9 +7,9 @@ RGB CreateRGB(int red, int green, int blue)
 {
 	RGB rgb;
 
-	rgb.red = red;
-	rgb.green = green;
-	rgb.blue = blue;
+	rgb.red = (red > 255) ? 255 : ((red < 0) ? 0 : red);
+	rgb.green = (green > 255) ? 255 : ((green < 0) ? 0 : green);
+	rgb.blue = (blue > 255) ? 255 : ((blue < 0) ? 0 : blue);
 
 	return rgb;
 }
@@ -304,4 +304,14 @@ RGB RandColorRGB()
 HSV RandColorHSV()
 {
 	return CreateHSV(RandDouble(0, 360), RandDouble(0, 1), RandDouble(0, 1));
+}
+
+RGB MergeRGB(RGB a, RGB b)
+{
+	return CreateRGB((a.red + b.red) / 2, (a.green + b.green) / 2, (a.blue + b.blue) / 2);
+}
+
+HSV MergeHSV(HSV a, HSV b)
+{
+	return CreateHSV((a.hue + b.hue) / 2, (a.saturation + b.saturation) / 2, (a.value + b.value) / 2);
 }
