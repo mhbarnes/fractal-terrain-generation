@@ -8,6 +8,7 @@ bitmap_image sharpen(&bitmap_image);
 bitmap_image box_blur(&bitmap_image);
 bitmap_image gauss_blur(&bitmap_image);
 //gauss_blur() helper functions
+void pop_kern(RGB [][3]
 void top_left(RGB [][3], &bitmap_image);
 void top_right(RGB[][3], &bitmap_image);
 void bot_left(RGB[][3], &bitmap_image);
