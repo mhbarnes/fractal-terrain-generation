@@ -1,13 +1,14 @@
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
+#include <stdlib.h>
+#include <time.h>
 #include <cmath>
 #include "window.h"
 #include "fractal.h"
-#include "bitmap_image.hpp"
 
 int main()
 {
+	// Randomize seed
+	srand(time(NULL));
+
 	// Shaders input
 	std::string temp1 = getFileText("shaders/shader.vert");
 	const char* vertexShaderSource = temp1.c_str();

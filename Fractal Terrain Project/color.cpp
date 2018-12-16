@@ -1,9 +1,65 @@
-#include <iostream>
-#include <cstdlib>
-#include <algorithm>
 #include "color.h"
 
 using namespace std;
+
+
+RGB CreateRGB(int red, int green, int blue)
+{
+	RGB rgb;
+
+	rgb.red = red;
+	rgb.green = green;
+	rgb.blue = blue;
+
+	return rgb;
+}
+
+HSV CreateHSV(double hue, double saturation, double value)
+{
+	HSV hsv;
+
+	hsv.hue = hue;
+	hsv.saturation = saturation;
+	hsv.value = value;
+
+	return hsv;
+}
+
+RGB BitmapToRGB(rgb_t rgb_bmp)
+{
+	RGB rgb;
+
+	rgb.red = rgb_bmp.red;
+	rgb.green = rgb_bmp.green;
+	rgb.blue = rgb_bmp.blue;
+
+	return rgb;
+}
+
+HSV BitmapToHSV(rgb_t rgb_bmp)
+{
+	return RGB2HSV(BitmapToRGB(rgb_bmp));
+}
+
+rgb_t RGBToBitmap(int red, int green, int blue)
+{
+	return RGBToBitmap(CreateRGB(red, green, blue));
+}
+rgb_t RGBToBitmap(RGB rgb)
+{
+	rgb_t rgb_bmp;
+
+	rgb_bmp.red = rgb.red;
+	rgb_bmp.green = rgb.green;
+	rgb_bmp.blue = rgb.blue;
+
+	return rgb_bmp;
+}
+
+rgb_t HSVToBitmap(HSV hsv)
+{
+	return RGBToBitmap(HSV2RGB(hsv));
+}
 
 /******************************************************************************
 
@@ -132,36 +188,50 @@ static double Max(double a, double b) {
 	return a >= b ? a : b;
 }
 
-double GetHue(RGB rgb)
+double GetHue(double red, double green, double blue)
 {
-	double min = Min(Min(rgb.red, rgb.green), rgb.blue);
-	double max = Max(Max(rgb.red, rgb.green), rgb.blue);
+	double min = Min(Min(red, green), blue);
+	double max = Max(Max(red, green), blue);
 
 	double hue = 0;
 
-	if (rgb.red >= rgb.green && rgb.red >= rgb.blue)
-		hue = (rgb.green - rgb.blue) / (max - min);
-	else if (rgb.green >= rgb.red && rgb.green >= rgb.blue)
-		hue = 2 + (rgb.blue - rgb.red) / (max - min);
-	else if (rgb.blue >= rgb.red && rgb.blue >= rgb.green)
-		hue = 4 + (rgb.red - rgb.green) / (max - min);
+	if (red >= green && red >= blue)
+		hue = (green - blue) / (max - min);
+	else if (green >= red && green >= blue)
+		hue = 2 + (blue - red) / (max - min);
+	else if (blue >= red && blue >= green)
+		hue = 4 + (red - green) / (max - min);
 
 	if (hue < 0)
 		hue += 360;
 
 	return hue * 60;
 }
+double GetHue(RGB rgb)
+{
+	return GetHue(rgb.red, rgb.green, rgb.blue);
+}
 
+double GetSaturation(double red, double green, double blue)
+{
+	double max = Max(Max(red, green), blue);
+
+	return (max == 0) ? 0 : 1 - (1 * Min(Min(red, green), blue) / max);
+}
 double GetSaturation(RGB rgb)
 {
 	double max = Max(Max(rgb.red, rgb.green), rgb.blue);
 
-	return (max == 0) ? 0 : 1 - (1 * Min(Min(rgb.red, rgb.green), rgb.blue) / max);
+	return GetSaturation(rgb.red, rgb.green, rgb.blue);
 }
 
+double GetValue(double red, double green, double blue)
+{
+	return (double)Max(Max(red, green), blue) / 255;
+}
 double GetValue(RGB rgb)
 {
-	return (double) Max(Max(rgb.red, rgb.green), rgb.blue) / 255;
+	return GetValue(rgb.red, rgb.green, rgb.blue);
 }
 
 HSV RGB2HSV(RGB rgb)
@@ -174,10 +244,64 @@ HSV RGB2HSV(RGB rgb)
 
 	return hsv;
 }
+HSV RGB2HSV(double red, double green, double blue)
+{
+	HSV hsv;
+
+	hsv.hue = GetHue(red, green, blue);
+	hsv.saturation = GetSaturation(red, green, blue);
+	hsv.value = GetValue(red, green, blue);
+
+	return hsv;
+}
 
 void RGB2HSV(struct RGB ** rgb_arr, struct HSV ** hsv_arr, int rows, int cols)
 {
     for(int i = 0; i < rows; i++)
         for(int j = 0; j < cols; j++)
 			hsv_arr[i][j] = RGB2HSV(rgb_arr[i][j]);
+}
+
+RGB HSV2RGB(HSV hsv)
+{
+	int hi = (int) floor(hsv.hue / 60) % 6;
+	double f = hsv.hue / 60 - floor(hsv.hue / 60);
+
+	double value = hsv.value * 255;
+	int v = value;
+	int p = value * (1 - hsv.saturation);
+	int q = value * (1 - f * hsv.saturation);
+	int t = value * (1 - (1 - f) * hsv.saturation);
+
+	if (hi == 0)
+		return CreateRGB(v, t, p);
+	if (hi == 1)
+		return CreateRGB(q, v, p);
+	if (hi == 2)
+		return CreateRGB(p, v, t);
+	if (hi == 3)
+		return CreateRGB(p, q, v);
+	if (hi == 4)
+		return CreateRGB(t, p, v);
+
+	return CreateRGB(v, p, q);
+}
+int RandInt(int min, int max)
+{
+	return (rand() % (max - min + 1)) + min;
+}
+
+double RandDouble(double min, double max)
+{
+	return ((double) rand() / RAND_MAX) * (max - min) + min;
+}
+
+RGB RandColorRGB()
+{
+	return CreateRGB(RandInt(0, 255), RandInt(0, 255), RandInt(0, 255));
+}
+
+HSV RandColorHSV()
+{
+	return CreateHSV(RandDouble(0, 360), RandDouble(0, 1), RandDouble(0, 1));
 }

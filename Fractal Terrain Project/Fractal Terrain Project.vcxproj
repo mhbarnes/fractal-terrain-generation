@@ -125,6 +125,8 @@
     <ClCompile Include="fractal.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="math.h" />
+    <ClCompile Include="math.cpp" />
     <ClCompile Include="terrainmap.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
