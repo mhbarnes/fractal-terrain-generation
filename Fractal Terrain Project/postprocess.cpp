@@ -24,13 +24,9 @@ bitmap_image gauss_blur(&bitmap_image bmp) {
 	for (int i = 0; i < bmp.width(); i++) {
 		for (int j = 0; j < bmp.height(); j++) {
 			currPix = get_pixel[i][j];
-<<<<<<< HEAD
 			for (int k = 0; k < n * n; k++) {
 				
 			}
-=======
-			
->>>>>>> 6710018993e5cc268541c3b2f06c4ed261c7a156
 		}
 	}
 
@@ -38,12 +34,9 @@ bitmap_image gauss_blur(&bitmap_image bmp) {
 }
 
 //gauss_blur() helper functions (for boundary cases)
-<<<<<<< HEAD
-void pop_kern(RGB kern[][3], &bitmap_image bmp) {
-	if ()
+void pop_kern(RGB kern[][3], &bitmap_image ) {
+	
 }
-=======
->>>>>>> 6710018993e5cc268541c3b2f06c4ed261c7a156
 void top_left(RGB kern[][3], &bitmap_image bmp) {
 	kern[0][0] = kern[1][1];
 	kern[0][1] = kern[1][1];
